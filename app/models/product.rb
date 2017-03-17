@@ -8,4 +8,6 @@ class Product < ActiveRecord::Base
 	validates :price, presence: true
 	validates_numericality_of :price
 
+	belongs_to :user
+
 end

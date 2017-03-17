@@ -3,39 +3,5 @@
 	<h1>Product Entry</h1>
 	<hr>
 
-	<%= form_for @product do |f| %>
-		
-		<% if @product.errors.any? %>
-
-			<% @product.errors.full_messages.each do |msg| %>
-				<ul>
-					<li><%= msg %></li>
-				</ul>
-			<% end %>
-		
-		<% end %>
-
-		<div class="form-group">
-			<%= f.label :name %>
-			<%= f.text_field :name, class: "form-control" %>
-		</div>
-
-		<div class="form-group">
-			<%= f.label :image %>
-			<%= f.file_field :image, class: "form-control" %>
-		</div>
-
-		<div class="form-group">
-			<%= f.label :description %>
-			<%= f.text_area :description, class: "form-control" %>
-		</div>
-
-		<div class="form-group">
-			<%= f.label :price %>
-			<%= f.text_field :price, class: "form-control" %>
-		</div>
-
-		<%= f.submit "Save", class: "btn btn-primary" %>
-	
-	<% end %>
+	<%= render "form" %>
 </div>
