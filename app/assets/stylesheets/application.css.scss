@@ -15,3 +15,13 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+#home_header {
+	height: 500px;
+	background: url("header-bg1.jpg");
+	background-size: cover;
+}
+
+.navbar {
+	margin-bottom: 0;
+}
