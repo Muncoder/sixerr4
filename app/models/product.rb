@@ -9,5 +9,6 @@ class Product < ActiveRecord::Base
 	validates_numericality_of :price
 
 	belongs_to :user
+	has_many :orders
 
 end

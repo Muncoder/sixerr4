@@ -11,7 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170317115315) do
+ActiveRecord::Schema.define(version: 20170318153558) do
+
+  create_table "orders", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.decimal  "price"
+    t.decimal  "total_price"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "stripe_customer_id"
+    t.string   "stripe_email"
+    t.string   "currency"
+    t.string   "description"
+  end
+
+  add_index "orders", ["product_id"], name: "index_orders_on_product_id"
+  add_index "orders", ["user_id"], name: "index_orders_on_user_id"
 
   create_table "products", force: :cascade do |t|
     t.string   "name"

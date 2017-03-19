@@ -1,2 +1,94 @@
-<h1>Products#show</h1>
-<p>Find me in app/views/products/show.html.erb</p>
+<div class="container">
+	<div class="row">
+		
+		<div class="col-md-6">
+			<div class="well">
+				<%= image_tag @product.image.url(:medium) %>
+				<hr>
+				<h2><%= @product.price %></h2>
+				<hr>
+				<span class="label label-info">Description</span>
+				<h3><%= @product.description %></h3>
+			</div>
+		</div>
+
+		<div class="col-md-3">
+			
+		</div>
+
+		<div class="col-md-3">
+			<div class="well">
+				<%= form_tag charges_path, id: 'chargeForm' do %>
+				  <article>
+				    <% if flash[:error].present? %>
+				      <div id="error_explanation">
+				        <p><%= flash[:error] %></p>
+				      </div>
+				    <% end %>
+				  </article>
+
+				  <script src="https://checkout.stripe.com/checkout.js"></script>
+				  <%= hidden_field_tag 'stripeToken' %>
+				  <%= hidden_field_tag 'stripeEmail' %>
+				  <%= hidden_field_tag 'price', @product.price %>
+				  <%= hidden_field_tag 'total_price', {id: "total_price"} %>
+				  <%= hidden_field_tag 'product_id', @product.id %>
+				  <%= hidden_field_tag 'description', @product.name %>
+					
+				  <center>
+					<button type="button" id="btn-order" class="btn btn-primary btn-lg btn-order">
+						Order Now ($<%= @product.price %>)
+					</button>
+
+					<script type="text/javascript">
+						var handler = StripeCheckout.configure({
+							key: '<%= Rails.configuration.stripe[:publishable_key] %>',
+							token: function(token, arg) {
+								document.getElementById("stripeToken").value = token.id;
+								document.getElementById("stripeEmail").value = token.email;
+								document.getElementById("chargeForm").submit();
+							}
+						});
+
+						document.getElementById("btn-order").addEventListener('click', function(e){
+							var quantity = $('#quantity').val();
+							var total_price = (quantity * "<%= @product.price %>");
+							var total_price = Math.round(total_price*100);
+							$('#total_price').val(total_price);
+							alert(total_price);
+							handler.open({
+								name: "Sixerr4",
+								description: "<%= @product.name %>",
+								amount: total_price
+							});
+							e.preventDefault();
+						});
+					</script>
+							
+				  </center>
+
+			</div>
+
+			<hr>
+			Select Quantity:
+			<%= select_tag :quantity, options_for_select([
+					["1 (£#{@product.price.round(2) * 1})", 1],
+					["2 (£#{@product.price * 2})", 2],
+					["3 (£#{@product.price * 3})", 3],
+					["4 (£#{@product.price * 4})", 4],
+					["5 (£#{@product.price * 5})", 5]
+				]), {id: "quantity"} %>
+
+			<% end %>
+
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("select").bind("change", function(){
+			$('.btn-order').html('Order Now ' + $("select option:selected").html());
+		});
+	})
+</script>

@@ -25,6 +25,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-sass'
 gem 'devise'
 gem 'paperclip'
+gem 'figaro'
+gem 'stripe'
+
 
 
 group :development, :test do

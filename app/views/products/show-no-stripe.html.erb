@@ -1,0 +1,52 @@
+<div class="container">
+	<div class="row">
+		
+		<div class="col-md-6">
+			<div class="well">
+				<%= image_tag @product.image.url(:medium) %>
+				<hr>
+				<h2><%= @product.price %></h2>
+				<hr>
+				<span class="label label-info">Description</span>
+				<h3><%= @product.description %></h3>
+			</div>
+		</div>
+
+		<div class="col-md-3">
+			
+		</div>
+
+		<div class="col-md-3">
+			<div class="well">
+				<%= form_for([@product, @product.orders.new]) do |f| %>
+					<%= f.hidden_field :product_id, value: @product.id %>
+					<%= f.hidden_field :price, value: @product.price %>
+					<center>
+						<%= f.submit "Order Now - £#{@product.price}", class: "btn btn-info btn-lg btn-order" %>
+					</center>
+				
+			</div>
+
+			<hr>
+			Select Quantity:
+			<%= f.select :quantity, options_for_select([
+					["1 (£#{@product.price * 1})", 1],
+					["2 (£#{@product.price * 2})", 2],
+					["3 (£#{@product.price * 3})", 3],
+					["4 (£#{@product.price * 4})", 4],
+					["5 (£#{@product.price * 5})", 5]
+				]), {id: "quantity"} %>
+
+			<% end %>
+
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("select").bind("change", function(){
+			$('.btn-order').val('Order Now -' + $("select option:selected").html());
+		});
+	})
+</script>

@@ -1,0 +1,29 @@
+<div class="container">
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Product Name</th>
+				<th>Image</th>
+				<th>Seller</th>
+				<th>Quantity</th>
+				<th>Price</th>
+				<th>Total Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @purchases.each do |purchase| %>
+				<tr>
+					<td><%= purchase.product.name %></td>
+					<td><%= image_tag purchase.product.image.url(:thumb) %></td>
+					<td>
+						<%= image_tag avatar_url(purchase.product.user) %>
+					</td>
+					<td><%= purchase.quantity %></td>
+					<td><%= purchase.price %></td>
+					<td><%= purchase.total_price %></td>
+				</tr>
+			<% end %>
+		</tbody>
+
+	</table>
+</div>
