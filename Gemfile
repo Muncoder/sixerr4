@@ -27,7 +27,7 @@ gem 'devise'
 gem 'paperclip'
 gem 'figaro'
 gem 'stripe'
-
+gem 'will_paginate-bootstrap'
 
 
 group :development, :test do
