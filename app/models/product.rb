@@ -17,4 +17,8 @@ class Product < ActiveRecord::Base
 		description.length > 130 ? description[0..130] + "..." : description
 	end
 
+	def self.search(search_text)
+		where('name LIKE ? or description LIKE ?', "%#{search_text}%", "%#{search_text}%")
+	end
+
 end

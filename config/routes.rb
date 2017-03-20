@@ -21,4 +21,6 @@ Rails.application.routes.draw do
 
   resources :charges, only: [ :create ]
 
+  get "search" => "pages#search"
+
 end

@@ -10,4 +10,8 @@ class PagesController < ApplicationController
   	@sales = current_user.products
   end
 
+  def search
+  	@products = Product.search(params[:q])
+  end
+
 end
