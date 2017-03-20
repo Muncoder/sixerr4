@@ -13,4 +13,8 @@ class Product < ActiveRecord::Base
 
 	self.per_page = 3
 
+	def short_description
+		description.length > 130 ? description[0..130] + "..." : description
+	end
+
 end

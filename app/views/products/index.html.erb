@@ -14,7 +14,12 @@
 								<%= image_tag product.image.url(:medium) %>
 							<% end %>
 							<h2><%= product.name %></h2>
-							<p><%= product.description %></p>
+							<p>
+								<%= product.short_description %>
+								<% if product.description.length > 130 %>
+									<%= link_to "show more>>", product_path(product) %>
+								<% end %>
+							</p>
 						</div>
 						<hr>
 						<%= link_to "Show", product_path(product), class: "btn btn-xs btn-info" %>
