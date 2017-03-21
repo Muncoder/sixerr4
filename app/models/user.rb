@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   has_many :products
-  has_many :orders       
+  has_many :orders
+  has_many :reviews       
 
   def full_name
   	first_name + " " + last_name

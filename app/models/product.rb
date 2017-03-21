@@ -10,6 +10,7 @@ class Product < ActiveRecord::Base
 
 	belongs_to :user
 	has_many :orders
+	has_many :reviews
 
 	self.per_page = 3
 
@@ -20,5 +21,14 @@ class Product < ActiveRecord::Base
 	def self.search(search_text)
 		where('name LIKE ? or description LIKE ?', "%#{search_text}%", "%#{search_text}%")
 	end
+
+	def has_reviews(user)
+		reviews.map(&:user).include?(user)
+	end
+
+	def review_average
+		reviews.average(:star)
+	end
+
 
 end

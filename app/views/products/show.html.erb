@@ -83,12 +83,58 @@
 
 		</div>
 	</div>
+
+	<div class="row">
+		<h3>Reviews</h3>
+		<hr>
+		Review Average: <div id="review_average"></div>
+		<hr>
+		<% @reviews.each do |review| %>
+			<div class="row well">
+				<div class="col-md-2">
+
+					<div id="review_star_<%= review.id %>"></div>
+				</div>
+				<div class="col-md-3">
+					<%= image_tag avatar_url(review.user), class: "img-circle" %>
+				</div>
+				<div class="col-md-6"><%= review.comment %></div>
+				<%= link_to "Delete", product_review_path(@product, review), method: :delete, data: {confirm: "Sure to Delete?"}, class: "btn btn-xs btn-danger" %>
+			</div>
+
+			<script>
+				$('#review_star_<%= review.id %>').raty({
+					path: '/assets',
+					readOnly: true,
+					scoreName: "review_<%= review.id %>",
+					score: '<%= review.star %>'
+				});
+			</script>
+
+		<% end %>
+		
+		<% if !@product.has_reviews(current_user) %>
+			<%= render "reviews/form" %>		
+		<% end %>
+
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
 </div>
 
 <script>
 	$(document).ready(function(){
 		$("select").bind("change", function(){
 			$('.btn-order').html('Order Now ' + $("select option:selected").html());
+		});
+
+		$('#review_average').raty({
+			path: '/assets',
+			scoreName: 'review_average',
+			score: <%= @product.review_average %>,
+			readOnly: true
 		});
 	})
 </script>
